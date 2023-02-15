@@ -1,1 +1,1 @@
-# tetrix
+# tetris
