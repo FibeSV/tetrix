@@ -1,0 +1,26 @@
+# ninja log v5
+1	674	7014663411679202	tetris_autogen/timestamp	73d17f3e8b699223
+1	674	7014663411679202	tetris_autogen/mocs_compilation.cpp	73d17f3e8b699223
+1	674	7014663411679202	C:/Users/Pinata/Desktop/ENSTA/TETRIS/Tetris_Syoma_Q/tetrix/TETRISV2/build-TETRISV2-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/tetris_autogen/timestamp	73d17f3e8b699223
+1	674	7014663411679202	C:/Users/Pinata/Desktop/ENSTA/TETRIS/Tetris_Syoma_Q/tetrix/TETRISV2/build-TETRISV2-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/tetris_autogen/mocs_compilation.cpp	73d17f3e8b699223
+688	1845	7014663424746742	CMakeFiles/tetris.dir/tetrispiece.cpp.obj	6fb4dffeb4ed1322
+679	2798	7014663434276031	CMakeFiles/tetris.dir/main.cpp.obj	14d4b9ade67e2a6f
+675	2903	7014663435329956	CMakeFiles/tetris.dir/tetris_autogen/mocs_compilation.cpp.obj	a41674b3790c87
+685	6557	7014663471868078	CMakeFiles/tetris.dir/tetriswindow.cpp.obj	1e780e74df157ca9
+13	658	7014712912557881	tetris_autogen/timestamp	73d17f3e8b699223
+13	658	7014712912557881	tetris_autogen/mocs_compilation.cpp	73d17f3e8b699223
+13	658	7014712912557881	C:/Users/Pinata/Desktop/ENSTA/TETRIS/Tetris_Syoma_Q/tetrix/TETRISV2/build-TETRISV2-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/tetris_autogen/timestamp	73d17f3e8b699223
+13	658	7014712912557881	C:/Users/Pinata/Desktop/ENSTA/TETRIS/Tetris_Syoma_Q/tetrix/TETRISV2/build-TETRISV2-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/tetris_autogen/mocs_compilation.cpp	73d17f3e8b699223
+663	3064	7014712937949276	CMakeFiles/tetris.dir/main.cpp.obj	14d4b9ade67e2a6f
+659	3167	7014712939032757	CMakeFiles/tetris.dir/tetris_autogen/mocs_compilation.cpp.obj	a41674b3790c87
+15	1138	7014714695267482	tetris_autogen/timestamp	73d17f3e8b699223
+15	1138	7014714695267482	tetris_autogen/mocs_compilation.cpp	73d17f3e8b699223
+15	1138	7014714695267482	C:/Users/Pinata/Desktop/ENSTA/TETRIS/Tetris_Syoma_Q/tetrix/TETRISV2/build-TETRISV2-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/tetris_autogen/timestamp	73d17f3e8b699223
+15	1138	7014714695267482	C:/Users/Pinata/Desktop/ENSTA/TETRIS/Tetris_Syoma_Q/tetrix/TETRISV2/build-TETRISV2-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/tetris_autogen/mocs_compilation.cpp	73d17f3e8b699223
+1139	5915	7014714745870603	CMakeFiles/tetris.dir/main.cpp.obj	14d4b9ade67e2a6f
+18	1205	7014714971340407	tetris_autogen/timestamp	73d17f3e8b699223
+18	1205	7014714971340407	tetris_autogen/mocs_compilation.cpp	73d17f3e8b699223
+18	1205	7014714971340407	C:/Users/Pinata/Desktop/ENSTA/TETRIS/Tetris_Syoma_Q/tetrix/TETRISV2/build-TETRISV2-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/tetris_autogen/timestamp	73d17f3e8b699223
+18	1205	7014714971340407	C:/Users/Pinata/Desktop/ENSTA/TETRIS/Tetris_Syoma_Q/tetrix/TETRISV2/build-TETRISV2-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/tetris_autogen/mocs_compilation.cpp	73d17f3e8b699223
+1214	5212	7014715014942354	CMakeFiles/tetris.dir/main.cpp.obj	14d4b9ade67e2a6f
+1206	5365	7014715016489353	CMakeFiles/tetris.dir/tetris_autogen/mocs_compilation.cpp.obj	a41674b3790c87
