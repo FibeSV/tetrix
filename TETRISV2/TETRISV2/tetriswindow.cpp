@@ -19,7 +19,7 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     connect(start, &QPushButton::clicked, board, &TetrisBoard::start);
     connect(quit , &QPushButton::clicked, qApp, &QCoreApplication::quit);
     connect(pause, &QPushButton::clicked, board, &TetrisBoard::pause);
-    connect(board, &TetrisBoard::ScoreChange, score, qOverload<int>(&QLCDNumber::display));
+    connect(board, &TetrisBoard::scoreChange, score, qOverload<int>(&QLCDNumber::display));
     connect(board, &TetrisBoard::lignesChange, lignes, qOverload<int>(&QLCDNumber::display));
 
     QGridLayout *layout = new QGridLayout; //need to change some values here.
