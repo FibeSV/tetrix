@@ -8,6 +8,7 @@
 #include <QFrame>
 #include <QPointer>
 
+#include "qlabel.h"
 #include "tetrispiece.h"
 
 QT_BEGIN_NAMESPACE
@@ -60,7 +61,7 @@ private:
     void drawSquare(QPainter &painter, int x, int y, TetrisShape shape);
 
     QBasicTimer timer;
-    QPointer<QLabel> labelPieceSuivante;
+    QPointer <QLabel> nextPieceLabel;
     bool isStarted;
     bool isPaused;
     bool isWaitingAfterLine;
