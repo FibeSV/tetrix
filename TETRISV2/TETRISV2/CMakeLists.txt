@@ -12,6 +12,7 @@ set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/widgets/widgets/tetrix")
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 
 qt_add_executable(tetris
+    host_window.h host_window.cpp
     main.cpp
     tetrisboard.cpp tetrisboard.h
     tetrispiece.cpp tetrispiece.h

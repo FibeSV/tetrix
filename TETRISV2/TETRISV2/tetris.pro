@@ -1,12 +1,12 @@
 QT += widgets
 
-HEADERS       = tetrixboard.h \
-                tetrixpiece.h \
-                tetrixwindow.h
+HEADERS       = tetrisboard.h \
+                tetrispiece.h \
+                tetriswindow.h
 SOURCES       = main.cpp \
-                tetrixboard.cpp \
-                tetrixpiece.cpp \
-                tetrixwindow.cpp
+                tetrisboard.cpp \
+                tetrispiece.cpp \
+                tetriswindow.cpp
 
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/widgets/widgets/tetrix
