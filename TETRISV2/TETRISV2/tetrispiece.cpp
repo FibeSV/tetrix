@@ -1,6 +1,6 @@
 #include "tetrispiece.h"
 #include <QRandomGenerator>
-
+#include <QtCore>
 void TetrisPiece::setRandomShape()
 {
     setShape(TetrisShape(QRandomGenerator::global()->bounded(7) + 1));

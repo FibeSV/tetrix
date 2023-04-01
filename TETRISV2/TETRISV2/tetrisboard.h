@@ -1,5 +1,3 @@
-// Copyright (C) 2016 The Qt Company Ltd.
-// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 
 #ifndef TETRISBOARD_H
 #define TETRISBOARD_H
@@ -16,7 +14,7 @@ QT_BEGIN_NAMESPACE
 class QLabel;
 QT_END_NAMESPACE
 
-//! [0]
+
 class TetrisBoard : public QFrame
 {
     Q_OBJECT
@@ -36,14 +34,13 @@ signals:
     void scoreChange(int score);
     void levelChange(int level);
     void lignesChange(int numLines);
+    void nextPieceChanged(const TetrisPiece& nextPiece);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void timerEvent(QTimerEvent *event) override;
-//! [0]
 
-//! [1]
 private:
     enum { BoardWidth = 10, BoardHeight = 22 };
 
@@ -77,6 +74,5 @@ private:
     int level;
     TetrisShape board[BoardWidth * BoardHeight];
 };
-//! [1]
 
 #endif

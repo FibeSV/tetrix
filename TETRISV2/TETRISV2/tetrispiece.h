@@ -1,6 +1,5 @@
 #ifndef TETRISPIECE_H
 #define TETRISPIECE_H
-//enum TetrixShape { NoShape, ZShape, SShape, LineShape, TShape, SquareShape,LShape, MirroredLShape };
 
 enum TetrisShape { NoShape,Z,S,I,T,O,L,J };
 class TetrisPiece

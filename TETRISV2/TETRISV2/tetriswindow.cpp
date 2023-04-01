@@ -1,19 +1,41 @@
 #include "tetriswindow.h"
+#include "tetrisboard.h"
+#include <QPainter>
 #include <QtWidgets>
+#include <QCoreApplication>
+#include <QGridLayout>
+#include <QLabel>
+#include <QLCDNumber>
+#include <QPushButton>
 TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisBoard) //le constructeur crée la grille et l'endroit où l'on indiquera la prochaine pièce
 {
+    nextPieceLabel = new QLabel;
+    nextPieceLabel->setFrameStyle(QFrame::Box | QFrame::Raised);
+    nextPieceLabel->setAlignment(Qt::AlignCenter);
+    nextPieceLabel->setFont(QFont("8514OEM", 20, QFont::Bold));
+
+    nextPieceLabel->setStyleSheet("color: #fac898;");
+    board->setNextPieceLabel(nextPieceLabel);
+
     score = new QLCDNumber(5);// cela correspond à l'affichage du score en jeu
     score->setSegmentStyle(QLCDNumber::Filled);
     lignes = new QLCDNumber(5);//
     lignes ->setSegmentStyle(QLCDNumber::Filled);
 
+    /*QPainter painter(this);
+    painter.setPen(QColor("#fac898")); // set the pen color to red
+    painter.setFont(QFont("Caslon", 22));*/
+
     //ici on crée des boutons quit, start, pause aux fonctionalités respectives pour faciliter l'experience de l'utilisateur.
     start = new QPushButton(tr("&Commencer"));
     start->setFocusPolicy(Qt::NoFocus); //Ici on a mis NoFocus car on ne veut pas que ces boutons prennent le dessus sur le jeu au niveau des entrées clavier.
+    start->setStyleSheet("font-size: 20px; color: #fac898; font-family: 8514OEM;");
     quit = new QPushButton(tr("&Quitter"));
     quit->setFocusPolicy(Qt::NoFocus);
+    quit->setStyleSheet("font-size: 20px; color: #fac898; font-family: 8514OEM;");
     pause = new QPushButton(tr("&Pause"));
     pause->setFocusPolicy(Qt::NoFocus);
+    pause->setStyleSheet("font-size: 20px; color: #fac898; font-family: 8514OEM;");
 
     //Ici on associe les boutons créés au dessus avec les fonctionalités respectives.
     connect(start, &QPushButton::clicked, board, &TetrisBoard::start);
@@ -22,7 +44,9 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     connect(board, &TetrisBoard::scoreChange, score, qOverload<int>(&QLCDNumber::display));
     connect(board, &TetrisBoard::lignesChange, lignes, qOverload<int>(&QLCDNumber::display));
 
+
     QGridLayout *layout = new QGridLayout; //need to change some values here.
+
     layout->addWidget(createLabel(tr("PROCHAINE PIECE")), 0, 0);
     layout->addWidget(nextPieceLabel, 1, 0);
     layout->addWidget(start, 4, 0);
@@ -37,6 +61,9 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
 
     setWindowTitle(tr("TETRIS"));
     resize(600, 350);
+    setStyleSheet("background-color: #2aa198;");
+
+
 }
 
 
@@ -44,5 +71,7 @@ QLabel *TetrisWindow::createLabel(const QString &text) // cette fonction sert es
 {
     QLabel *label = new QLabel(text);
     label->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
+    label->setStyleSheet("font-size: 20px; color: #fac898; font-family: 8514OEM;");
+
     return label;
 }

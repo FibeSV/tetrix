@@ -1,6 +1,9 @@
 #include "tetrisboard.h"
 #include "qevent.h"
 #include "qpainter.h"
+#include <QKeyEvent>
+#include <QLabel>
+#include <QPainter>
 
 TetrisBoard::TetrisBoard(QWidget *parent)
     : QFrame(parent), isStarted(false), isPaused(false)
@@ -8,8 +11,8 @@ TetrisBoard::TetrisBoard(QWidget *parent)
     setFrameStyle(QFrame::Panel | QFrame::Sunken);
     setFocusPolicy(Qt::StrongFocus); //on s'assure que tous les évènements claviers sont "coincés" dans le jeu.
     clearBoard();
-
     nextPiece.setRandomShape();
+    setStyleSheet("background-color: #fdf6e3;");
 }
 void TetrisBoard::setNextPieceLabel(QLabel *label)
 {
@@ -131,10 +134,12 @@ void TetrisBoard::timerEvent(QTimerEvent *event)
 }
 void TetrisBoard::pieceDropped(int dropHeight) // Fonction appelée lorsque la pièce courante atteint le bas de la grille ou touche une autre pièce
 {
-    for (int i = 0; i < 4; ++i) {
-        int x = curX + curPiece.x(i);
-        int y = curY - curPiece.y(i);
-        shapeAt(x, y) = curPiece.shape();
+    int index = 0;
+    while (index < 4) {
+    int xPosition = curX + curPiece.x(index);
+    int yPosition = curY - curPiece.y(index);
+    shapeAt(xPosition, yPosition) = curPiece.shape();
+    index++;
     }
     // Augmentation du compteur de pièces déposées et mise à jour du niveau tous les 25 pièces
     ++numPiecesDrop;
@@ -145,11 +150,12 @@ void TetrisBoard::pieceDropped(int dropHeight) // Fonction appelée lorsque la p
     }
     // Calcul et ajout du score pour le déplacement de la pièce à sa position finale
     score += dropHeight + 7;
-    emit scoreChange(score); // signal pour mettre à jour l'affichage du score
+    emit scoreChange(score);
+    if (!isWaitingAfterLine) // si on n'attend pas après une suppression de ligne, on génère une nouvelle pièce
+        newPiece();// signal pour mettre à jour l'affichage du score
     removeFullLines(); // suppression des lignes complètes, si il y en a
 
-    if (!isWaitingAfterLine) // si on n'attend pas après une suppression de ligne, on génère une nouvelle pièce
-        newPiece();
+
 }
 void TetrisBoard::clearBoard()
 {
@@ -158,15 +164,13 @@ void TetrisBoard::clearBoard()
 }
 void TetrisBoard::dropDown()
 {
-    int dropHeight = 0; //hauteur cible de la chute
+    int drop = 0; //hauteur cible de la chute
     int newY = curY; // coordonnée en Y de la pièce
-    while (newY > 0) {
-        if (!tryMove(curPiece, curX, newY - 1)) //si la pièce rencontre un obstacle.
-            break;
-        --newY; // déplacer la pièce vers le bas
-        dropHeight++;
+    while (newY > 0 && tryMove(curPiece, curX, newY - 1)) { // tant que la pièce peut être déplacée vers le bas
+        newY--; // déplacer la pièce vers le bas
+        drop++;
     }
-    pieceDropped(dropHeight);//on finalise la position de la pièce.
+    pieceDropped(drop); // finaliser la position de la pièce
 }
 void TetrisBoard::oneLineDown()
 {
@@ -195,7 +199,7 @@ void TetrisBoard::removeFullLines()
             }
             for (int j = 0; j < BoardWidth; ++j) // on supprime la dernière ligne.
                 shapeAt(j, BoardHeight - 1) = NoShape;
-        }
+
     }
     if (numFullLines > 0) { //on transmet les infos sur les lignes supprimées
             numLignesRmv += numFullLines;
@@ -209,11 +213,13 @@ void TetrisBoard::removeFullLines()
             update();
         }
     }
+}
+
 
 void TetrisBoard::showNextPiece()
 {
-    if (!nextPieceLabel) {
-        return;
+   if (!nextPieceLabel) {
+      return;
     }
 
     // Calcul des dimensions de la pièce
@@ -240,6 +246,7 @@ void TetrisBoard::showNextPiece()
 
     // Affichage de l'image sur le QLabel pour la prochaine pièce
     nextPieceLabel->setPixmap(QPixmap::fromImage(image));
+
 }
 
 
