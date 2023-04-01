@@ -23,8 +23,8 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     connect(board, &TetrisBoard::lignesChange, lignes, qOverload<int>(&QLCDNumber::display));
 
     QGridLayout *layout = new QGridLayout; //need to change some values here.
-    layout->addWidget(createLabel(tr("Suivant")), 0, 0);
-    layout->addWidget(nextPiece, 1, 0);
+    layout->addWidget(createLabel(tr("PROCHAINE PIECE")), 0, 0);
+    layout->addWidget(nextPieceLabel, 1, 0);
     layout->addWidget(start, 4, 0);
     layout->addWidget(board, 0, 1, 6, 1);
     layout->addWidget(createLabel(tr("SCORE")), 0, 2);

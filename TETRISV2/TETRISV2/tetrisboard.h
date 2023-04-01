@@ -7,6 +7,7 @@
 #include <QBasicTimer>
 #include <QFrame>
 #include <QPointer>
+#include <QPainter>
 
 #include "qlabel.h"
 #include "tetrispiece.h"
@@ -23,7 +24,7 @@ class TetrisBoard : public QFrame
 public:
     TetrisBoard(QWidget *parent = nullptr);
 
-    void setLabelPieceSuivante(QLabel *label);
+    void setNextPieceLabel(QLabel *label);
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
@@ -59,6 +60,7 @@ private:
     void showNextPiece();
     bool tryMove(const TetrisPiece &newPiece, int newX, int newY);
     void drawSquare(QPainter &painter, int x, int y, TetrisShape shape);
+    void GameOver();
 
     QBasicTimer timer;
     QPointer <QLabel> nextPieceLabel;

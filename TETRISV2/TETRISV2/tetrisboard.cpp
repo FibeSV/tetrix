@@ -11,7 +11,7 @@ TetrisBoard::TetrisBoard(QWidget *parent)
 
     nextPiece.setRandomShape();
 }
-void TetrisBoard::setLabelPieceSuivante(QLabel *label)
+void TetrisBoard::setNextPieceLabel(QLabel *label)
 {
     nextPieceLabel = label;
 }
@@ -212,23 +212,25 @@ void TetrisBoard::removeFullLines()
 
 void TetrisBoard::showNextPiece()
 {
-    if (!nextPieceLabel) // Vérifie si le QLabel pour la prochaine pièce est valide
+    if (!nextPieceLabel) {
         return;
+    }
 
     // Calcul des dimensions de la pièce
     int dx = nextPiece.maxX() - nextPiece.minX() + 1;
     int dy = nextPiece.maxY() - nextPiece.minY() + 1;
 
-    // Création d'une QPixmap pour dessiner la pièce
-    QPixmap pixmap(dx * squareWidth(), dy * squareHeight());
+    // Création d'une QImage pour dessiner la pièce
+    QImage image(dx * squareWidth(), dy * squareHeight(), QImage::Format_RGB32);
 
-    // Création d'un QPainter pour dessiner sur la QPixmap
-    QPainter painter(&pixmap);
+    // Remplissage de l'image avec la couleur de fond du QLabel
+    QColor backgroundColor = nextPieceLabel->palette().color(QPalette::Window);
+    image.fill(backgroundColor);
 
-    // Remplissage de la QPixmap avec la couleur de fond du QLabel
-    painter.fillRect(pixmap.rect(), nextPieceLabel->palette().window());
+    // Création d'un QPainter pour dessiner sur l'image
+    QPainter painter(&image);
 
-    // Dessin de chaque carré de la pièce sur la QPixmap
+    // Dessin de chaque carré de la pièce sur l'image
     for (int i = 0; i < 4; ++i) {
         int x = nextPiece.x(i) - nextPiece.minX();
         int y = nextPiece.y(i) - nextPiece.minY();
@@ -236,9 +238,10 @@ void TetrisBoard::showNextPiece()
                    nextPiece.shape());
     }
 
-    // Affichage de la QPixmap sur le QLabel pour la prochaine pièce
-    nextPieceLabel->setPixmap(pixmap);
+    // Affichage de l'image sur le QLabel pour la prochaine pièce
+    nextPieceLabel->setPixmap(QPixmap::fromImage(image));
 }
+
 
 bool TetrisBoard::tryMove(const TetrisPiece &newPiece, int newX, int newY)
 {// Vérifie si le déplacement d'une pièce à une nouvelle position est possible
@@ -273,9 +276,11 @@ void TetrisBoard::newPiece()
     if (tryMove(curPiece, curX, curY)) {
         return;
     }
-    //si on ne peut pas mettre une nouvelle pièce c'est game ove.
+    //si on ne peut pas mettre une nouvelle pièce c'est game over.
     curPiece.setShape(NoShape);
+    GameOver();
     timer.stop();
+
     isStarted = false;
 }
 
@@ -321,4 +326,17 @@ void TetrisBoard::drawSquare(QPainter &painter, int x, int y, TetrisShape shape)
                      x + squareWidth() - 1, y + squareHeight() - 1);
     painter.drawLine(x + squareWidth() - 1, y + squareHeight() - 1,
                      x + squareWidth() - 1, y + 1);
+}
+
+void TetrisBoard::GameOver()
+{
+    QPainter painter(this);
+    painter.setPen(Qt::red);
+    painter.setFont(QFont("Arial", 20));
+    QString message = "Game Over\nScore: " + QString::number(score);
+    int textWidth = painter.fontMetrics().horizontalAdvance(message);
+    int textHeight = painter.fontMetrics().height();
+    int x = (width() - textWidth) / 2;
+    int y = (height() - textHeight) / 2;
+    painter.drawText(x, y, textWidth, textHeight, Qt::AlignCenter, message);
 }

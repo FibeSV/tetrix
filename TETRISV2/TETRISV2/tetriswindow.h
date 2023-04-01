@@ -20,7 +20,7 @@ private: //ici on définit tout les éléments visuels que l'on veut voir appara
 
     TetrisBoard *board; //notre grille de jeu
 
-    QLabel *nextPiece; //l'affichage de la pièce suivante
+    QLabel *nextPieceLabel; //l'affichage de la pièce suivante
 
     QLCDNumber *score;
     QLCDNumber *lignes;
