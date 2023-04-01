@@ -60,16 +60,23 @@ int TetrisPiece::maxY() const
 
 TetrisPiece TetrisPiece::rotatedLeft() const
 {
+    // If the piece is shaped like an O, it cannot be rotated
     if (pieceShape == O)
         return *this;
 
-    TetrisPiece res;
-    res.pieceShape = pieceShape;
+    TetrisPiece res; // Create a new TetrisPiece object to hold the rotated piece
+    res.pieceShape = pieceShape; // Copy over the current shape
+
+    // Apply the rotation transformation to each block of the piece
     for (int i = 0; i < 4; ++i) {
+        // The x-coordinate becomes the y-coordinate of the current block
         res.setX(i, y(i));
+        // The y-coordinate becomes the negative of the x-coordinate of the current block
         res.setY(i, -x(i));
     }
-    return res;
+    // Apply additional rotation by swapping x and y coordinates and negating the new y
+
+    return res; // Return the rotated piece
 }
 
 TetrisPiece TetrisPiece::rotatedRight() const
@@ -83,5 +90,6 @@ TetrisPiece TetrisPiece::rotatedRight() const
         res.setX(i, -y(i));
         res.setY(i, x(i));
     }
+
     return res;
 }
