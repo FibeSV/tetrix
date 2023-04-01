@@ -15,6 +15,12 @@ public:
     MainMultiplayer(QWidget *parent = nullptr);
     ~MainMultiplayer();
 
+private slots:
+
+    void on_create_server_button_clicked();
+
+    void on_connect_button_clicked();
+
 private:
     Ui::MainMultiplayer *ui;
 };
