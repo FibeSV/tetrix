@@ -41,5 +41,5 @@ void TetrisBoard::start()
     emit ScoreChange(score);
 
     newPiece();
-    timer.start(timeoutTime(), this);
+    timer.start(10, this);
 }
