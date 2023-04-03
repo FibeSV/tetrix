@@ -79,17 +79,3 @@ TetrisPiece TetrisPiece::rotatedLeft() const
     return res; // Return the rotated piece
 }
 
-TetrisPiece TetrisPiece::rotatedRight() const
-{
-    if (pieceShape == O)
-        return *this;
-
-    TetrisPiece res;
-    res.pieceShape = pieceShape;
-    for (int i = 0; i < 4; ++i) {
-        res.setX(i, -y(i));
-        res.setY(i, x(i));
-    }
-
-    return res;
-}

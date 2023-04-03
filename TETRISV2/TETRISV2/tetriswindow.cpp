@@ -13,18 +13,23 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     nextPieceLabel->setFrameStyle(QFrame::Box | QFrame::Raised);
     nextPieceLabel->setAlignment(Qt::AlignCenter);
     nextPieceLabel->setFont(QFont("8514OEM", 20, QFont::Bold));
-
     nextPieceLabel->setStyleSheet("color: #fac898;");
     board->setNextPieceLabel(nextPieceLabel);
+
+
+    heldPieceLabel = new QLabel;
+    heldPieceLabel->setFrameStyle(QFrame::Box | QFrame::Raised);
+    heldPieceLabel->setAlignment(Qt::AlignCenter);
+    heldPieceLabel->setFont(QFont("8514OEM", 20, QFont::Bold));
+    heldPieceLabel->setStyleSheet("color: #fac898;");
+    board->setHeldPieceLabel(heldPieceLabel);
 
     score = new QLCDNumber(5);// cela correspond à l'affichage du score en jeu
     score->setSegmentStyle(QLCDNumber::Filled);
     lignes = new QLCDNumber(5);//
     lignes ->setSegmentStyle(QLCDNumber::Filled);
 
-    /*QPainter painter(this);
-    painter.setPen(QColor("#fac898")); // set the pen color to red
-    painter.setFont(QFont("Caslon", 22));*/
+
 
     //ici on crée des boutons quit, start, pause aux fonctionalités respectives pour faciliter l'experience de l'utilisateur.
     start = new QPushButton(tr("&Commencer"));
@@ -38,17 +43,18 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     pause->setStyleSheet("font-size: 20px; color: #fac898; font-family: 8514OEM;");
 
     //Ici on associe les boutons créés au dessus avec les fonctionalités respectives.
-    connect(start, &QPushButton::clicked, board, &TetrisBoard::start);
+    connect(start, &QPushButton::clicked, board, &TetrisBoard::startGame);
     connect(quit , &QPushButton::clicked, qApp, &QCoreApplication::quit);
-    connect(pause, &QPushButton::clicked, board, &TetrisBoard::pause);
+    connect(pause, &QPushButton::clicked, board, &TetrisBoard::pauseGame);
     connect(board, &TetrisBoard::scoreChange, score, qOverload<int>(&QLCDNumber::display));
     connect(board, &TetrisBoard::lignesChange, lignes, qOverload<int>(&QLCDNumber::display));
-
 
     QGridLayout *layout = new QGridLayout; //need to change some values here.
 
     layout->addWidget(createLabel(tr("PROCHAINE PIECE")), 0, 0);
     layout->addWidget(nextPieceLabel, 1, 0);
+    layout->addWidget(createLabel(tr("PIECE STOCKEE")), 2, 0);
+    layout->addWidget(heldPieceLabel, 3, 0);
     layout->addWidget(start, 4, 0);
     layout->addWidget(board, 0, 1, 6, 1);
     layout->addWidget(createLabel(tr("SCORE")), 0, 2);

@@ -20,8 +20,6 @@ public:
     int maxY() const;
 
     TetrisPiece rotatedLeft() const; //les deux fonctions pour faire tourner les pièces.
-    TetrisPiece rotatedRight() const;
-    //il reste à définir HOLD et DROP functions
 
 private:// ici on définit les 4 blocs qui constituent une pièce
     void setX(int index, int x) { coords[index][0] = x; }
