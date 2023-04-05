@@ -6,7 +6,7 @@
 #include <QPointer>
 #include <QPainter>
 #include "qlabel.h"
-#include "tetrispiece.h"
+#include "tetromino.h"
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -29,9 +29,11 @@ void pauseGame();
 
 signals:
 void scoreChange(int score);
-void levelChange(int level);
+/*void levelChange(int level);*/
+void showMessage(QString message);
 void lignesChange(int numLines);
-void nextPieceChanged(const TetrisPiece& nextPiece);
+
+void nextPieceChanged(const Tetromino& nextPiece);
 
 protected:
 void paintEvent(QPaintEvent *event) override;
@@ -45,11 +47,11 @@ int squareHeight() { return contentsRect().height() / BoardHeight; }
 int squareWidth() { return contentsRect().width() / BoardWidth; }
 void createNewPiece();
 void removeFullLines();
-void pieceDropped(int dropHeight);
-void drawSquare(QPainter &painter, int x, int y, TetrisShape shape);
+void pieceDropped();
+void paintPiece(QPainter &painter, int x, int y, TetrisShape shape);
 void dropCurrentPiece();
 void clearBoard();
-bool tryMove(const TetrisPiece &newPiece, int newX, int newY);
+bool tryMove(const Tetromino &newPiece, int newX, int newY);
 void flashGameOverMessage(QPainter &painter);
 void updateSlot();
 void hold();
@@ -59,9 +61,10 @@ int timeoutTime() { return 1000 / (1 + level); }
 QBasicTimer timer;
 QPointer<QLabel> nextPieceLabel;
 QPointer<QLabel> heldPieceLabel;
-TetrisPiece curPiece;
-TetrisPiece nextPiece;
-TetrisPiece heldPiece;
+QPointer<QLabel> levelLabel;
+Tetromino curPiece;
+Tetromino nextPiece;
+Tetromino heldPiece;
 TetrisShape board[BoardWidth * BoardHeight];
 int curX;
 int curY;

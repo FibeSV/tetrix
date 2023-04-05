@@ -1,11 +1,11 @@
-#include "tetrispiece.h"
+#include "tetromino.h"
 #include <QRandomGenerator>
 #include <QtCore>
-void TetrisPiece::setRandomShape()
+void Tetromino::setRandomShape()
 {
     setShape(TetrisShape(QRandomGenerator::global()->bounded(7) + 1));
 }
-void TetrisPiece::setShape(TetrisShape shape)
+void Tetromino::setShape(TetrisShape shape)
 {
     static constexpr int coordsTable[8][4][2] = {
         { { 0, 0 },   { 0, 0 },   { 0, 0 },   { 0, 0 } },
@@ -25,7 +25,7 @@ void TetrisPiece::setShape(TetrisShape shape)
     pieceShape = shape;
 }
 
-int TetrisPiece::minX() const
+int Tetromino::minX() const
 {
     int min = coords[0][0];
     for (int i = 1; i < 4; ++i)
@@ -33,7 +33,7 @@ int TetrisPiece::minX() const
     return min;
 }
 
-int TetrisPiece::maxX() const
+int Tetromino::maxX() const
 {
     int max = coords[0][0];
     for (int i = 1; i < 4; ++i)
@@ -41,7 +41,7 @@ int TetrisPiece::maxX() const
     return max;
 }
 
-int TetrisPiece::minY() const
+int Tetromino::minY() const
 {
     int min = coords[0][1];
     for (int i = 1; i < 4; ++i)
@@ -49,7 +49,7 @@ int TetrisPiece::minY() const
     return min;
 }
 
-int TetrisPiece::maxY() const
+int Tetromino::maxY() const
 {
     int max = coords[0][1];
     for (int i = 1; i < 4; ++i)
@@ -58,13 +58,13 @@ int TetrisPiece::maxY() const
 }
 
 
-TetrisPiece TetrisPiece::rotatedLeft() const
+Tetromino Tetromino::rotatedLeft() const
 {
     // If the piece is shaped like an O, it cannot be rotated
     if (pieceShape == O)
         return *this;
 
-    TetrisPiece res; // Create a new TetrisPiece object to hold the rotated piece
+    Tetromino res; // Create a new TetrisPiece object to hold the rotated piece
     res.pieceShape = pieceShape; // Copy over the current shape
 
     // Apply the rotation transformation to each block of the piece

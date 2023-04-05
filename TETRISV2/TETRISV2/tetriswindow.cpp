@@ -9,6 +9,13 @@
 #include <QPushButton>
 TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisBoard) //le constructeur crée la grille et l'endroit où l'on indiquera la prochaine pièce
 {
+   /*La classe QLabel est une classe de widget qui peut afficher du texte ou une image. Dans ce cas, elle est utilisée pour afficher du texte, et les méthodes setFrameStyle et setAlignment sont utilisées pour configurer l'apparence du widget. La méthode setFont est utilisée pour spécifier la police utilisée pour afficher le texte.
+    La méthode setStyleSheet est utilisée pour configurer la feuille de style du widget QLabel,
+    spécifiant les couleurs et les propriétés d'affichage, en utilisant une syntaxe similaire aux feuilles de style CSS.
+    Enfin, les widgets nextPieceLabel et heldPieceLabel sont transmis à un objet board,
+    probablement un objet de jeu, en utilisant les méthodes setNextPieceLabel et setHeldPieceLabel,
+    pour indiquer à cet objet où afficher ces widgets sur l'interface graphique.
+    */
     nextPieceLabel = new QLabel;
     nextPieceLabel->setFrameStyle(QFrame::Box | QFrame::Raised);
     nextPieceLabel->setAlignment(Qt::AlignCenter);
@@ -16,7 +23,12 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     nextPieceLabel->setStyleSheet("color: #fac898;");
     board->setNextPieceLabel(nextPieceLabel);
 
+ /*  levelLabel = new QLabel(this);
+    levelLabel->setGeometry(0, 0, width(), 20);
+    levelLabel->setAlignment(Qt::AlignCenter);
+    levelLabel->setStyleSheet("QLabel { background-color : rgba(255, 255, 255, 0%); }");
 
+*/
     heldPieceLabel = new QLabel;
     heldPieceLabel->setFrameStyle(QFrame::Box | QFrame::Raised);
     heldPieceLabel->setAlignment(Qt::AlignCenter);

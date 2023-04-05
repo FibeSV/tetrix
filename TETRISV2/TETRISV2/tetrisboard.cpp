@@ -58,7 +58,7 @@ void TetrisBoard::startGame() //Une partie est lancée lorsque start est appell�
 
     emit lignesChange(numLignesRmv);
     emit scoreChange(score);
-    emit levelChange(level);
+    //emit levelChange(level);
 
     createNewPiece();
     timer.start(timeoutTime(), this);//le timer sert à savoir quand on va faire descendre la pièce d'une ligne.
@@ -98,7 +98,7 @@ void TetrisBoard::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Down:
             movePieceOneLineDown(); //fait descendre la pièce d'une case
             break;
-        case Qt::Key_H:
+        case Qt::Key_C:
             hold();//on stocke une pièce dans la boîte hold
 
         default:
@@ -117,7 +117,7 @@ void TetrisBoard::paintEvent(QPaintEvent *event)
         for (int j = 0; j < BoardWidth; ++j) {
             TetrisShape shape = shapeAt(j, BoardHeight - i - 1); //récupération de la forme de la pièce à la position j,i
             if (shape != NoShape)
-                drawSquare(painter, rect.left() + j * squareWidth(),
+                paintPiece(painter, rect.left() + j * squareWidth(),
                            boardTop + i * squareHeight(), shape); //dessin de la pièce à la position j,i
         }
     }
@@ -125,7 +125,7 @@ void TetrisBoard::paintEvent(QPaintEvent *event)
             for (int i = 0; i < 4; ++i) {
                 int x = curX + curPiece.x(i);
                 int y = curY - curPiece.y(i);
-                drawSquare(painter, rect.left() + x * squareWidth(),
+                paintPiece(painter, rect.left() + x * squareWidth(),
                            boardTop + (BoardHeight - y - 1) * squareHeight(),
                            curPiece.shape());
             }
@@ -157,7 +157,7 @@ void TetrisBoard::flashGameOverMessage(QPainter &painter)
         colorIndex = 0;
     }
     QTimer::singleShot(100,this, &TetrisBoard::updateSlot);
-
+    //QTimer::singleShot(100, this, &QWidget::update());
 }
 void TetrisBoard::updateSlot()
 {
@@ -186,7 +186,7 @@ void TetrisBoard::timerEvent(QTimerEvent *event)
         movePieceOneLineDown();
     }
 }
-void TetrisBoard::pieceDropped(int dropHeight)
+void TetrisBoard::pieceDropped()
 {
     // Parcourt les 4 blocs de la pièce courante et les place dans la grille
     for (int i = 0; i < 4; i++) {
@@ -212,18 +212,18 @@ void TetrisBoard::clearBoard()
 }
 void TetrisBoard::dropCurrentPiece()
 {
-    int drop = 0; //hauteur cible de la chute
+    //int drop = 0; //hauteur cible de la chute
     int newY = curY; // coordonnée en Y de la pièce
     while (newY > 0 && tryMove(curPiece, curX, newY - 1)) { // tant que la pièce peut être déplacée vers le bas
         newY--; // déplacer la pièce vers le bas
-        drop++;
+        //drop++;
     }
-    pieceDropped(drop); // finaliser la position de la pièce
+    pieceDropped(); // finaliser la position de la pièce
 }
 void TetrisBoard::movePieceOneLineDown()
 {
     if (!tryMove(curPiece, curX, curY - 1))// on essaie de bouger la pièce vers le bas
-        pieceDropped(0);// si ce n'est pas possible la position de la pièce est finalisée.
+        pieceDropped();// si ce n'est pas possible la position de la pièce est finalisée.
 }
 void TetrisBoard::removeFullLines()
 {
@@ -268,15 +268,15 @@ void TetrisBoard::removeFullLines()
         isWaitingAfterLine = true; // On attend avant de faire apparaître la prochaine pièce
 
         // Vérifie si le niveau doit être incrémenté
-        if (numLignesRmv >= 5) { // Tous les 20 lignes supprimées, le niveau augmente
-            numLignesRmv -= 5;
+        if (numLignesRmv % 5 == 0) { // Tous les 5 lignes supprimées, le niveau augmente
             ++level;
-            emit levelChange(level); // Émet un signal pour mettre à jour l'affichage du niveau
+            //emit levelChange(level); // Émet un signal pour mettre à jour l'affichage du niveau
         }
 
         curPiece.setShape(NoShape); // On supprime la pièce courante
         update(); // Met à jour l'affichage
     }
+
 }
 
 void TetrisBoard::hold()
@@ -291,7 +291,7 @@ void TetrisBoard::hold()
         }
     else {
             // Si une pièce a déjà été stockée, on échange la pièce actuelle avec celle stockée
-            TetrisPiece tmpPiece = heldPiece;
+            Tetromino tmpPiece = heldPiece;
             heldPiece = curPiece;
             curPiece = tmpPiece;
             curX = BoardWidth / 2 + curPiece.minX();
@@ -329,7 +329,7 @@ void TetrisBoard::updateHoldPieceLabel()
     for (int i = 0; i < 4; ++i) {
         int x = heldPiece.x(i) - heldPiece.minX();
         int y = heldPiece.y(i) - heldPiece.minY();
-        drawSquare(painter, x * squareWidth(), y * squareHeight(),
+        paintPiece(painter, x * squareWidth(), y * squareHeight(),
                    heldPiece.shape());
     }
 
@@ -363,7 +363,7 @@ void TetrisBoard::showNextPiece()
     for (int i = 0; i < 4; ++i) {
         int x = nextPiece.x(i) - nextPiece.minX();
         int y = nextPiece.y(i) - nextPiece.minY();
-        drawSquare(painter, x * squareWidth(), y * squareHeight(),
+        paintPiece(painter, x * squareWidth(), y * squareHeight(),
                    nextPiece.shape());
     }
 
@@ -373,7 +373,7 @@ void TetrisBoard::showNextPiece()
 }
 
 
-bool TetrisBoard::tryMove(const TetrisPiece &newPiece, int newX, int newY)
+bool TetrisBoard::tryMove(const Tetromino &newPiece, int newX, int newY)
 {// Vérifie si le déplacement d'une pièce à une nouvelle position est possible
     int pieceX, pieceY;
     for (int i = 0; i < 4; ++i) {        // Récupère les nouvelles coordonnées pour le carré
@@ -409,12 +409,12 @@ void TetrisBoard::createNewPiece()
     if (isGameOver) {
         timer.stop();
         QMessageBox::information(this, tr("Game Over"),
-            tr("Vous avez Perdu"));
+           tr("Vous avez Perdu"));
     }
 }
 
 
-void TetrisBoard::drawSquare(QPainter &painter, int x, int y, TetrisShape shape)
+void TetrisBoard::paintPiece(QPainter &painter, int x, int y, TetrisShape shape)
 {// Cette fonction est purement esthetique.
     QColor color;
     //I,O,T,L,J,Z,S, NoShape
